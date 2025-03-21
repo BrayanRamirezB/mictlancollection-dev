@@ -1,0 +1,74 @@
+---
+import data from '../data/components-data.json'
+---
+
+<div id='cards' class='relative h-full w-full'>
+  {
+    data.components.map((card, index) => (
+      <div
+        class='card sticky top-30 md:top-26 w-full'
+        style={`--index: ${index + 1}; --numcards: ${data.components.length};`}
+      >
+        <a
+          href={`/components/${card.title.replaceAll(' ', '-').toLowerCase()}`}
+          class='card__content top-0 grid grid-cols-1 grid-rows-2 md:grid-cols-2 md:grid-rows-1 bg-blue-600/30 transition-colors duration-500 ease-in-out hover:bg-blue-600/60 backdrop-blur-md saturate-100 shadow-xl rounded-3xl mb-20 h-[60vh] md:h-[30vh] lg:h-[60vh] w-[70vw] mx-auto'
+        >
+          <div class='flex flex-col items-center justify-center text-center p-6 gap-2'>
+            <h2 class='text-lg md:text-2xl lg:text-5xl font-bold mb-2'>
+              {card.title}
+            </h2>
+            <p class='text-sm md:text-md lg:text-xl text-pretty text-center text-neutral-200'>
+              {card.description}
+            </p>
+          </div>
+
+          <figure>
+            <div class='relative w-full h-full overflow-hidden shadow-2xl'>
+              <div class='w-full h-full bg-neutral-900 rounded-b-3xl md:rounded-b-none md:rounded-r-3xl object-center blur-[100px]'>
+                <div class='absolute inset-0 bg-blue-600 opacity-20 blur-[100px]' />
+              </div>
+
+              <div class='absolute inset-0 flex items-center justify-center'>
+                <img
+                  src={card.image}
+                  alt={card.title}
+                  class='size-6/7 rounded-3xl object-center shadow-lg'
+                />
+              </div>
+            </div>
+          </figure>
+        </a>
+      </div>
+    ))
+  }
+</div>
+
+<style>
+  #cards {
+    view-timeline-name: --cards-element-scrolls-in-body;
+  }
+
+  .card {
+    --index0: calc(var(--index) - 1);
+    --reverse-index: calc(var(--numcards) - var(--index0));
+    --reverse-index0: calc(var(--reverse-index) - 1);
+  }
+
+  @keyframes scale {
+    to {
+      transform: translateY(calc(-6% * var(--reverse-index0)))
+        scale(calc(1.1 - calc(0.1 * var(--reverse-index))));
+      opacity: calc(0.1 * var(--reverse-index));
+      filter: grayscale(calc(0.1 * var(--reverse-index)));
+    }
+  }
+
+  .card__content {
+    --start-range: calc(var(--index0) / var(--numcards) * 100%);
+    --end-range: calc((var(--index)) / var(--numcards) * 100%);
+    animation: linear scale forwards;
+    animation-timeline: --cards-element-scrolls-in-body;
+    animation-range: exit-crossing var(--start-range) exit-crossing
+      var(--end-range);
+  }
+</style>

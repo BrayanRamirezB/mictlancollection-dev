@@ -1,0 +1,10 @@
+{
+  "components": [
+    {
+      "id": 1,
+      "title": "Blurred background cards",
+      "description": "Componente diseñado para mostrar una colección de imágenes en un formato de tarjetas superpuestas con efectos visuales interactivos. ",
+      "image": "/thumbnails/blurred-background-cards.webp"
+    }
+  ]
+}
