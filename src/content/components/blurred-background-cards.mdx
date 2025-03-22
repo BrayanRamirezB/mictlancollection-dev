@@ -3,7 +3,19 @@ title: Blurred background cards
 ---
 
 import CodeBlock from '../../components/CodeBlock.jsx'
+import Alert from '../../components/Alert.jsx'
+import CustomTable from '../../components/Table/CustomTable.jsx'
 import BBCards from '../../components/BBCards.jsx'
+
+<div className='flex items-center justify-center mx-auto not-prose'>
+  <Alert
+    title='Pista'
+    content='Mueve el Mouse por encima de las cartas ✨.'
+    type='default'
+    styleVariant='bordered'
+    client:load
+  />
+</div>
 
 <div className='flex flex-col items-center justify-center pt-10 pb-20'>
   <BBCards
@@ -96,3 +108,30 @@ export default BBCards
 ```
 
 </CodeBlock>
+
+## Propiedades
+
+<CustomTable
+  items={[
+    {
+      prop: 'images',
+      type: 'array',
+      default: '--',
+      description:
+        'Arreglo de imágenes que se utilizarán como fondo de las tarjetas. Debe ser una matriz de imágenes.'
+    },
+    {
+      prop: 'spacing',
+      type: 'number',
+      default: '40px',
+      description: 'Espaciado entre las tarjetas en pixels.'
+    },
+    {
+      prop: 'rotationFactor',
+      type: 'number',
+      default: '8px',
+      description: 'Factor de rotación de las tarjetas en grados.'
+    }
+  ]}
+  client:load
+/>

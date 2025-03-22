@@ -23,7 +23,7 @@ const CodeBlock = ({ children }) => {
         {children}
         <button
           onClick={handleCopy}
-          className='absolute end-2 top-1 right-1 transition duration-300 text-neutral-100 hover:bg-white/20 hover:text-neutral-200 rounded-lg p-2 inline-flex items-center justify-center hover:scale-105 cursor-pointer'
+          className='absolute end-2 top-1 right-1 transition duration-300 text-neutral-100 hover:bg-white/20 hover:text-neutral-200 rounded-lg p-2 inline-flex items-center justify-center hover:scale-105 cursor-pointer hover:animate-squeeze'
         >
           {copied ? (
             <span className='inline-flex items-center'>

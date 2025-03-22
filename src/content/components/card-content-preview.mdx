@@ -1,0 +1,142 @@
+---
+title: Card content preview
+---
+
+import CodeBlock from '../../components/CodeBlock.jsx'
+import Alert from '../../components/Alert.jsx'
+import CustomTable from '../../components/Table/CustomTable.jsx'
+import CardContentPreview from '../../components/CardContentPreview.jsx'
+
+<div className='flex items-center justify-center mx-auto not-prose'>
+  <Alert
+    title='Pista'
+    content='Haz hover sobre una tarjeta para ver la previsualización de su contenido 🪄.'
+    type='default'
+    styleVariant='bordered'
+    client:load
+  />
+</div>
+
+<div className='flex items-center justify-center pt-10 pb-20 not-prose'>
+  <CardContentPreview
+    images={[
+      '/examples/img-example1.webp',
+      '/examples/img-example2.webp',
+      '/examples/img-example3.webp',
+      '/examples/img-example4.webp',
+      '/examples/img-example5.webp',
+      '/examples/img-example6.webp',
+      '/examples/img-example7.webp',
+      '/examples/img-example8.webp',
+      '/examples/img-example9.webp',
+      '/examples/img-example10.webp'
+    ]}
+    imagesPerRow={5}
+    client:load
+  />
+</div>
+
+## Ejemplo de uso
+
+<CodeBlock client:load>
+
+```jsx
+<CardContentPreview
+  images={[
+    '/examples/img-example1.webp',
+    '/examples/img-example2.webp',
+    '/examples/img-example3.webp',
+    '/examples/img-example4.webp',
+    '/examples/img-example5.webp',
+    '/examples/img-example6.webp',
+    '/examples/img-example7.webp',
+    '/examples/img-example8.webp',
+    '/examples/img-example9.webp',
+    '/examples/img-example10.webp'
+  ]}
+  imagesPerRow={5}
+/>
+```
+
+</CodeBlock>
+
+## Código
+
+<CodeBlock client:load>
+
+```jsx
+import { useState } from 'react'
+
+const CardContentPreview = ({ images, imagesPerRow = 4 }) => {
+  const [activeImage, setActiveImage] = useState(images[0])
+  const [hoveredIndex, setHoveredIndex] = useState(-1)
+
+  return (
+    <div className='flex flex-col items-center gap-4 p-4'>
+      <div className='mb-4'>
+        <img
+          key={activeImage}
+          src={activeImage}
+          alt='Vista previa principal'
+          className='h-[350px] object-cover rounded-lg shadow-xl animate-fade-in-down'
+        />
+      </div>
+
+      <div
+        className='grid gap-4'
+        style={{
+          gridTemplateColumns: `repeat(${imagesPerRow}, minmax(0, 1fr))`
+        }}
+      >
+        {images.map((image, index) => (
+          <div
+            key={index}
+            className='relative'
+            onMouseEnter={() => {
+              setActiveImage(image)
+              setHoveredIndex(index)
+            }}
+            onMouseLeave={() => setHoveredIndex(-1)}
+          >
+            <img
+              src={image}
+              alt={`Miniatura ${index + 1}`}
+              className={`w-[200px] h-[200px] object-cover rounded-lg shadow-md transition-all duration-200 hover:scale-95 ${
+                hoveredIndex !== -1 && index !== hoveredIndex
+                  ? 'grayscale blur-sm'
+                  : ''
+              }`}
+            />
+            <div className='absolute inset-0 bg-black opacity-0 hover:opacity-20 transition-opacity duration-300 rounded-lg' />
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+export default CardContentPreview
+```
+
+</CodeBlock>
+
+## Propiedades
+
+<CustomTable
+  items={[
+    {
+      prop: 'images',
+      type: 'array',
+      default: '--',
+      description:
+        'Arreglo de imágenes que se utilizarán como fondo de las tarjetas. Debe ser una matriz de imágenes.'
+    },
+    {
+      prop: 'imagesPerRow',
+      type: 'number',
+      default: '4',
+      description: 'Número de imágenes por fila en el grid.'
+    }
+  ]}
+  client:load
+/>

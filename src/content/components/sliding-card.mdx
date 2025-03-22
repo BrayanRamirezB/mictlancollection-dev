@@ -1,0 +1,197 @@
+---
+title: Sliding card
+---
+
+import CodeBlock from '../../components/CodeBlock.jsx'
+import Alert from '../../components/Alert.jsx'
+import CustomTable from '../../components/Table/CustomTable.jsx'
+import SlidingCard from '../../components/SlidingCard.jsx'
+
+<div className='flex items-center justify-center mx-auto not-prose'>
+  <Alert
+    title='Pista'
+    content='Arrastra la tarjeta a la izquierda o derecha para ver el efecto de desplazamiento 🖱️.'
+    type='default'
+    styleVariant='bordered'
+    client:load
+  />
+</div>
+
+<div className='flex items-center justify-center pt-10 pb-20 not-prose'>
+  <SlidingCard className='h-[400px] w-[280px]' client:load>
+    <img
+      src='/examples/img-example1.webp'
+      alt='img-example1'
+      className='size-full object-cover rounded-xl shadow-lg'
+    />
+  </SlidingCard>
+</div>
+
+## Ejemplo de uso
+
+<CodeBlock client:load>
+
+```jsx
+<SlidingCard className='h-[400px] w-[280px]'>
+  <img
+    src='/examples/img-example1.webp'
+    alt='img-example1'
+    className='size-full object-cover rounded-xl shadow-lg'
+  />
+</SlidingCard>
+```
+
+</CodeBlock>
+
+## Código
+
+<CodeBlock client:load>
+
+```jsx
+import { useEffect, useState, useRef } from 'react'
+
+const SlidingCard = ({
+  maxRotation = 45,
+  baseAnimationDuration = 300,
+  maxAnimationDuration = 600,
+  className,
+  children
+}) => {
+  const [isHydrated, setIsHydrated] = useState(false)
+  const [isDragging, setIsDragging] = useState(false)
+  const cardRef = useRef(null)
+  const startX = useRef(0)
+  const currentPosition = useRef(0)
+  const animationDuration = useRef(baseAnimationDuration)
+
+  useEffect(() => {
+    setIsHydrated(true)
+  }, [])
+
+  const handleStart = (clientX) => {
+    startX.current = clientX
+    setIsDragging(true)
+    if (cardRef.current) {
+      cardRef.current.style.transition = 'none'
+    }
+  }
+
+  const handleMove = (clientX) => {
+    if (!isHydrated || !isDragging) return
+
+    const delta = clientX - startX.current
+    currentPosition.current = delta
+
+    const rotation = (delta / window.innerWidth) * maxRotation
+    const opacity = 1 - Math.abs(delta) / window.innerWidth
+    const scale = 1 - Math.abs(delta) / 2000
+
+    if (cardRef.current) {
+      cardRef.current.style.transform = `translateX(${delta}px) rotate(${rotation}deg) scale(${scale})`
+      cardRef.current.style.opacity = opacity
+    }
+  }
+
+  const handleEnd = () => {
+    if (!isHydrated || !isDragging) return
+
+    const distance = Math.abs(currentPosition.current)
+    const maxDistance = window.innerWidth
+    const duration = Math.min(
+      baseAnimationDuration +
+        (distance / maxDistance) *
+          (maxAnimationDuration - baseAnimationDuration),
+      maxAnimationDuration
+    )
+
+    animationDuration.current = duration
+
+    if (cardRef.current) {
+      const card = cardRef.current
+      card.style.transition = `all ${duration}ms cubic-bezier(0.4, 0, 0.2, 1)`
+      card.style.transform = 'translateX(0px) rotate(0deg) scale(1)'
+      card.style.opacity = 1
+
+      const onTransitionEnd = () => {
+        card.style.transition = 'none'
+        card.removeEventListener('transitionend', onTransitionEnd)
+      }
+      card.addEventListener('transitionend', onTransitionEnd)
+    }
+
+    setIsDragging(false)
+    currentPosition.current = 0
+  }
+
+  const getCardStyle = () => {
+    const style = { cursor: isDragging ? 'grabbing' : 'grab' }
+    if (!isHydrated) style.opacity = 0
+    return style
+  }
+
+  return (
+    <div
+      className={`select-none ${className}`}
+      onTouchStart={(e) => handleStart(e.touches[0].clientX)}
+      onTouchMove={(e) => handleMove(e.touches[0].clientX)}
+      onTouchEnd={handleEnd}
+      onMouseDown={(e) => {
+        e.preventDefault()
+        handleStart(e.clientX)
+      }}
+      onMouseMove={(e) => {
+        e.preventDefault()
+        handleMove(e.clientX)
+      }}
+      onMouseUp={handleEnd}
+      onMouseLeave={handleEnd}
+    >
+      <div className='size-full relative' style={getCardStyle()} ref={cardRef}>
+        {children}
+      </div>
+    </div>
+  )
+}
+
+export default SlidingCard
+```
+
+</CodeBlock>
+
+## Propiedades
+
+<CustomTable
+  items={[
+    {
+      prop: 'maxRotation',
+      type: 'number',
+      default: '45',
+      description: 'Valor máximo de rotación de la tarjeta en grados.'
+    },
+    {
+      prop: 'baseAnimationDuration',
+      type: 'number',
+      default: '300',
+      description: 'Duración base de la animación en milisegundos.'
+    },
+    {
+      prop: 'maxAnimationDuration',
+      type: 'number',
+      default: '600',
+      description: 'Duración máxima de la animación en milisegundos.'
+    },
+    {
+      prop: 'className',
+      type: 'string',
+      default: '--',
+      description: 'Clase CSS adicional para el componente.'
+    },
+    {
+      prop: 'children',
+      type: 'ReactNode',
+      default: 'Requerido',
+      description: 'Elemento hijo que se renderizará dentro del componente.'
+    }
+  ]}
+  client:load
+/>
