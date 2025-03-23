@@ -27,7 +27,7 @@
     {
       "id": 5,
       "title": "Scroll album",
-      "description": "",
+      "description": "Componente interactivo para galerías horizontales que combina desplazamiento suavizado con efectos visuales dinámicos. Implementa un carrusel optimizado donde las imágenes realizan animaciones 3D (rotación y profundidad) al pasar por el centro de vista",
       "image": "/thumbnails/scroll-album.webp"
     }
   ]

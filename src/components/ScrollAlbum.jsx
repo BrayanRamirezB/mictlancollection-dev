@@ -93,9 +93,7 @@ const ScrollAlbum = ({
               width: `${width}px`,
               height: `${height}px`,
               animation: 'linear rotate-cover both',
-              animationTimeline: '--li-in-and-out-of-view',
-              WebkitBoxReflect:
-                'below 0.5em linear-gradient(rgb(0 0 0 / 0), rgb(0 0 0 / 0.25))'
+              animationTimeline: '--li-in-and-out-of-view'
             }}
           />
         </li>
