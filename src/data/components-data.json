@@ -17,6 +17,18 @@
       "title": "Card content preview",
       "description": "Componente desarrollado para mostrar una galería interactiva que utiliza una imagen principal y un grid de miniaturas. Al pasar el cursor sobre las miniaturas, la imagen principal se actualiza con efectos visuales dinámicos.",
       "image": "/thumbnails/card-content-preview.webp"
+    },
+    {
+      "id": 4,
+      "title": "Stacked Cards",
+      "description": "Componente que muestra una pila de imágenes superpuestas, donde la imagen superior se desvanece al hacer click, revelando la siguiente imagen.",
+      "image": "/thumbnails/stacked-cards.webp"
+    },
+    {
+      "id": 5,
+      "title": "Scroll album",
+      "description": "",
+      "image": "/thumbnails/scroll-album.webp"
     }
   ]
 }

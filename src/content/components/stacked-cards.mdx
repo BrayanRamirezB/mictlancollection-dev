@@ -1,0 +1,155 @@
+---
+title: Stacked Cards
+---
+
+import CodeBlock from '../../components/CodeBlock.jsx'
+import Alert from '../../components/Alert.jsx'
+import CustomTable from '../../components/Table/CustomTable.jsx'
+import StackedCards from '../../components/StackedCards.jsx'
+
+<div className='flex items-center justify-center mx-auto not-prose'>
+  <Alert
+    title='Pista'
+    content='Haz click para ver el efecto de desplazamiento ⬆️⬇️.'
+    type='default'
+    styleVariant='bordered'
+    client:load
+  />
+</div>
+
+<div className='flex items-center justify-center pt-10 pb-20 not-prose'>
+  <StackedCards
+    images={[
+      '/examples/img-example11.webp',
+      '/examples/img-example12.webp',
+      '/examples/img-example13.webp',
+      '/examples/img-example14.webp',
+      '/examples/img-example15.webp'
+    ]}
+    width={300}
+    height={350}
+    className='rounded-3xl shadow-lg'
+    client:load
+  />
+</div>
+
+## Ejemplo de uso
+
+<CodeBlock client:load>
+
+```jsx
+<StackedCards
+  images={[
+    '/examples/img-example11.webp',
+    '/examples/img-example12.webp',
+    '/examples/img-example13.webp',
+    '/examples/img-example14.webp',
+    '/examples/img-example15.webp'
+  ]}
+  width={300}
+  height={350}
+  className='rounded-3xl shadow-lg'
+/>
+```
+
+</CodeBlock>
+
+## Código
+
+<CodeBlock client:load>
+
+```jsx
+import { useState } from 'react'
+
+const StackedCards = ({ images, width = 64, height = 64, className = '' }) => {
+  const [stack, setStack] = useState(images)
+  const [animationStep, setAnimationStep] = useState(null)
+
+  const handleClick = () => {
+    if (stack.length === 0) return
+    setAnimationStep('blur')
+
+    setTimeout(() => {
+      setAnimationStep('move')
+    }, 500)
+
+    setTimeout(() => {
+      setStack((prev) => prev.slice(0, prev.length - 1))
+      setAnimationStep(null)
+    }, 1000)
+  }
+
+  return (
+    <div
+      className='relative'
+      style={{ width: `${width}px`, height: `${height}px` }}
+    >
+      {stack.map((img, index) => {
+        const offset = -1 * (stack.length - index - 1) * 14
+        const isTop = index === stack.length - 1
+
+        let animationClasses = 'transition-all duration-500'
+
+        if (isTop) {
+          animationClasses += ' hover:scale-105'
+        }
+        if (isTop && animationStep === 'blur') {
+          animationClasses += ' blur-sm grayscale'
+        }
+        if (isTop && animationStep === 'move') {
+          animationClasses +=
+            ' -translate-y-[100px] opacity-0 blur-sm grayscale'
+        }
+
+        return (
+          <img
+            key={index}
+            src={img}
+            alt={`Imagen ${index}`}
+            onClick={isTop ? handleClick : undefined}
+            className={`absolute left-0 size-full object-cover ${className} ${animationClasses}`}
+            style={{ bottom: `${offset}px` }}
+          />
+        )
+      })}
+    </div>
+  )
+}
+
+export default StackedCards
+```
+
+</CodeBlock>
+
+## Propiedades
+
+<CustomTable
+  items={[
+    {
+      prop: 'images',
+      type: 'array',
+      default: '--',
+      description:
+        'Arreglo de imágenes que se utilizarán como fondo de las tarjetas. Debe ser una matriz de imágenes.'
+    },
+    {
+      prop: 'width',
+      type: 'number',
+      default: '64',
+      description: 'Ancho de la tarjeta.'
+    },
+    {
+      prop: 'height',
+      type: 'number',
+      default: '64',
+      description: 'Alto de la tarjeta.'
+    },
+    {
+      prop: 'className',
+      type: 'string',
+      default: '--',
+      description: 'Clase CSS adicional para el componente.'
+    }
+  ]}
+  client:load
+/>

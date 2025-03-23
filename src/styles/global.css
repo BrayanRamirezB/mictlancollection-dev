@@ -96,3 +96,45 @@ span.line {
 @utility component-mask-fade {
   mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
 }
+
+.ScrollAlbum-item:first-of-type {
+  margin-left: calc(60% - (var(--cover-size) / 2));
+}
+.ScrollAlbum-item:last-of-type {
+  margin-right: calc(60% - (var(--cover-size) / 2));
+}
+
+@keyframes adjust-z-index {
+  0% {
+    z-index: 1;
+  }
+  50% {
+    z-index: 100;
+  }
+  100% {
+    z-index: 1;
+  }
+}
+
+@keyframes rotate-cover {
+  0% {
+    transform: translateX(-100%) rotateY(-45deg);
+    filter: blur(10px);
+  }
+  35% {
+    transform: translateX(0) rotateY(-45deg);
+    filter: blur(0);
+  }
+  50% {
+    transform: rotateY(0deg) translateZ(1em) scale(1.5);
+    filter: blur(0);
+  }
+  65% {
+    transform: translateX(0) rotateY(45deg);
+    filter: blur(0);
+  }
+  100% {
+    transform: translateX(100%) rotateY(45deg);
+    filter: blur(10px);
+  }
+}

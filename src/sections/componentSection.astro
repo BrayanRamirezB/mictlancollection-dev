@@ -11,7 +11,7 @@ import data from '../data/components-data.json'
       >
         <a
           href={`/components/${card.title.replaceAll(' ', '-').toLowerCase()}`}
-          class='card__content top-0 grid grid-cols-1 grid-rows-2 md:grid-cols-2 md:grid-rows-1 bg-blue-600/30 transition-colors duration-500 ease-in-out hover:bg-blue-600/60 backdrop-blur-md saturate-100 shadow-xl rounded-3xl mb-20 h-[60vh] md:h-[30vh] lg:h-[60vh] w-[70vw] mx-auto'
+          class='card__content top-0 group grid grid-cols-1 grid-rows-2 md:grid-cols-2 md:grid-rows-1 bg-blue-600/30 transition-colors duration-500 ease-in-out hover:bg-blue-600/60 backdrop-blur-md saturate-100 shadow-xl rounded-3xl mb-20 h-[60vh] md:h-[30vh] lg:h-[60vh] w-[70vw] mx-auto'
         >
           <div class='flex flex-col items-center justify-center text-center p-6 gap-2'>
             <h2 class='text-lg md:text-2xl lg:text-5xl font-bold mb-2'>
@@ -32,7 +32,7 @@ import data from '../data/components-data.json'
                 <img
                   src={card.image}
                   alt={card.title}
-                  class='size-6/7 rounded-3xl object-center shadow-lg'
+                  class='size-6/7 rounded-3xl object-center shadow-lg group-hover:animate-squeeze'
                 />
               </div>
             </div>

@@ -1,0 +1,278 @@
+---
+title: Scroll album
+---
+
+import CodeBlock from '../../components/CodeBlock.jsx'
+import Alert from '../../components/Alert.jsx'
+import CustomTable from '../../components/Table/CustomTable.jsx'
+import ScrollAlbum from '../../components/ScrollAlbum.jsx'
+
+<div className='flex items-center justify-center mx-auto not-prose'>
+  <Alert
+    title='Pista'
+    content='Posiciona el cursor sobre el componente y haz scroll para ver el efecto de desplazamiento 👀.'
+    type='default'
+    styleVariant='bordered'
+    client:load
+  />
+</div>
+
+<div className='flex items-center justify-center pt-10 pb-20 not-prose h-[600px]'>
+  <ScrollAlbum
+    images={[
+      '/examples/img-example1.webp',
+      '/examples/img-example2.webp',
+      '/examples/img-example3.webp',
+      '/examples/img-example4.webp',
+      '/examples/img-example5.webp',
+      '/examples/img-example6.webp',
+      '/examples/img-example7.webp',
+      '/examples/img-example8.webp',
+      '/examples/img-example9.webp',
+      '/examples/img-example10.webp',
+      '/examples/img-example11.webp',
+      '/examples/img-example12.webp',
+      '/examples/img-example13.webp',
+      '/examples/img-example14.webp',
+      '/examples/img-example15.webp'
+    ]}
+    width={200}
+    height={200}
+    client:load
+  />
+</div>
+
+## Ejemplo de uso
+
+<CodeBlock client:load>
+
+```jsx
+<ScrollAlbum
+  images={[
+    '/examples/img-example1.webp',
+    '/examples/img-example2.webp',
+    '/examples/img-example3.webp',
+    '/examples/img-example4.webp',
+    '/examples/img-example5.webp',
+    '/examples/img-example6.webp',
+    '/examples/img-example7.webp',
+    '/examples/img-example8.webp',
+    '/examples/img-example9.webp',
+    '/examples/img-example10.webp',
+    '/examples/img-example11.webp',
+    '/examples/img-example12.webp',
+    '/examples/img-example13.webp',
+    '/examples/img-example14.webp',
+    '/examples/img-example15.webp'
+  ]}
+  width={200}
+  height={200}
+/>
+```
+
+</CodeBlock>
+
+## Código
+
+<CodeBlock client:load>
+
+```jsx
+import { useRef, useEffect } from 'react'
+
+const ScrollAlbum = ({
+  images,
+  width = 200,
+  height = 250,
+  hideScrollbar = false,
+  className = ''
+}) => {
+  const scrollContainer = useRef(null)
+  const animationFrameId = useRef(null)
+
+  useEffect(() => {
+    const handleWheel = (event) => {
+      event.preventDefault()
+      const container = scrollContainer.current
+
+      if (animationFrameId.current) {
+        cancelAnimationFrame(animationFrameId.current)
+      }
+
+      const speedMultiplier = 1.2
+      const initialScrollLeft = container.scrollLeft
+      const targetScrollLeft =
+        initialScrollLeft + event.deltaY * speedMultiplier
+      const startTime = performance.now()
+      const duration = 250
+
+      const animateScroll = (currentTime) => {
+        const timeElapsed = currentTime - startTime
+        const progress = Math.min(timeElapsed / duration, 1)
+        container.scrollLeft =
+          initialScrollLeft + (targetScrollLeft - initialScrollLeft) * progress
+
+        if (timeElapsed < duration) {
+          animationFrameId.current = requestAnimationFrame(animateScroll)
+        } else {
+          animationFrameId.current = null
+        }
+      }
+
+      animationFrameId.current = requestAnimationFrame(animateScroll)
+    }
+
+    const container = scrollContainer.current
+    container.addEventListener('wheel', handleWheel, { passive: false })
+
+    return () => {
+      container.removeEventListener('wheel', handleWheel)
+      if (animationFrameId.current) {
+        cancelAnimationFrame(animationFrameId.current)
+      }
+    }
+  }, [])
+
+  const containerStyle = {
+    listStyle: 'none',
+    whiteSpace: 'nowrap',
+    msOverflowStyle: hideScrollbar ? 'none' : 'auto',
+    scrollbarWidth: hideScrollbar ? 'none' : 'auto',
+    WebkitOverflowScrolling: hideScrollbar ? 'none' : 'auto',
+    boxSizing: 'border-box',
+    '--cover-size': `${width}px`,
+    maskImage: hideScrollbar
+      ? 'linear-gradient(to top, transparent 10%, black 14%)'
+      : 'none'
+  }
+
+  return (
+    <ul
+      ref={scrollContainer}
+      className='flex flex-row items-center space-x-4 overflow-x-scroll scroll-snap-x snap-mandatory h-full w-full'
+      style={containerStyle}
+    >
+      {images.map((image, index) => (
+        <li
+          key={index}
+          className='ScrollAlbum-item inline-flex aspect-square scroll-snap-center perspective-[40em] relative'
+          style={{
+            width: `${width}px`,
+            height: `${height}px`,
+            viewTimelineName: '--li-in-and-out-of-view',
+            viewTimelineAxis: 'inline',
+            animation: 'linear adjust-z-index both',
+            animationTimeline: '--li-in-and-out-of-view'
+          }}
+        >
+          <img
+            src={image}
+            alt={`Cover ${index + 1}`}
+            className={`rounded-3xl object-center ${className}`}
+            style={{
+              width: `${width}px`,
+              height: `${height}px`,
+              animation: 'linear rotate-cover both',
+              animationTimeline: '--li-in-and-out-of-view',
+              WebkitBoxReflect:
+                'below 0.5em linear-gradient(rgb(0 0 0 / 0), rgb(0 0 0 / 0.25))'
+            }}
+          />
+        </li>
+      ))}
+    </ul>
+  )
+}
+
+export default ScrollAlbum
+```
+
+</CodeBlock>
+
+## Estilos y animaciones
+
+<CodeBlock client:load>
+
+```css
+.ScrollAlbum-item:first-of-type {
+  margin-left: calc(60% - (var(--cover-size) / 2));
+}
+.ScrollAlbum-item:last-of-type {
+  margin-right: calc(60% - (var(--cover-size) / 2));
+}
+
+@keyframes adjust-z-index {
+  0% {
+    z-index: 1;
+  }
+  50% {
+    z-index: 100;
+  }
+  100% {
+    z-index: 1;
+  }
+}
+
+@keyframes rotate-cover {
+  0% {
+    transform: translateX(-100%) rotateY(-45deg);
+    filter: blur(10px);
+  }
+  35% {
+    transform: translateX(0) rotateY(-45deg);
+    filter: blur(0);
+  }
+  50% {
+    transform: rotateY(0deg) translateZ(1em) scale(1.5);
+    filter: blur(0);
+  }
+  65% {
+    transform: translateX(0) rotateY(45deg);
+    filter: blur(0);
+  }
+  100% {
+    transform: translateX(100%) rotateY(45deg);
+    filter: blur(10px);
+  }
+}
+```
+
+</CodeBlock>
+
+## Propiedades
+
+<CustomTable
+  items={[
+    {
+      prop: 'images',
+      type: 'array',
+      default: '--',
+      description:
+        'Arreglo de imágenes que se utilizarán como fondo de las tarjetas. Debe ser una matriz de imágenes.'
+    },
+    {
+      prop: 'width',
+      type: 'number',
+      default: '64',
+      description: 'Ancho de la tarjeta.'
+    },
+    {
+      prop: 'height',
+      type: 'number',
+      default: '64',
+      description: 'Alto de la tarjeta.'
+    },
+    {
+      prop: 'className',
+      type: 'string',
+      default: '--',
+      description: 'Clase CSS adicional para el componente.'
+    },
+    {
+      prop: 'hideScrollbar',
+      type: 'boolean',
+      default: 'false',
+      description: 'Oculta el scrollbar del navegador.'
+    }
+  ]}
+  client:load
+/>
