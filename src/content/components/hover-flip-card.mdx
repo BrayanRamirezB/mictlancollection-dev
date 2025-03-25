@@ -1,0 +1,132 @@
+---
+title: Hover flip card
+---
+
+import CodeBlock from '../../components/CodeBlock.jsx'
+import Alert from '../../components/Alert.jsx'
+import CustomTable from '../../components/Table/CustomTable.jsx'
+import HoverFlipCard from '../../components/HoverFlipCard.jsx'
+
+<div className='flex items-center justify-center mx-auto not-prose'>
+  <Alert
+    title='Pista'
+    content='Haz hover sobre la tarjeta para ver la imagen en la parte trasera 🌄.'
+    type='default'
+    styleVariant='bordered'
+    client:load
+  />
+</div>
+
+<div className='flex items-center justify-center pt-10 pb-20 not-prose'>
+  <HoverFlipCard
+    imageBackground='/examples/img-example9.webp'
+    className='flex flex-col items-center justify-center p-8 rounded-xl shadow-lg bg-black/30 backdrop-blur-sm text-white'
+    client:load
+  >
+    <h2 className='text-xl font-bold mb-4'>Título de la Tarjeta</h2>
+    <p className='text-gray-600'>
+      Este es el contenido de la tarjeta. Permanece visible tanto en estado
+      normal como en hover.
+    </p>
+  </HoverFlipCard>
+</div>
+
+## Ejemplo de uso
+
+<CodeBlock client:load>
+
+```jsx
+<HoverFlipCard
+  imageBackground='/examples/img-example9.webp'
+  className='flex flex-col items-center justify-center p-8 rounded-xl shadow-lg bg-black/30 backdrop-blur-sm text-white'
+>
+  <h2 className='text-xl font-bold mb-4'>Título de la Tarjeta</h2>
+  <p className='text-gray-600'>
+    Este es el contenido de la tarjeta. Permanece visible tanto en estado normal
+    como en hover.
+  </p>
+</HoverFlipCard>
+```
+
+</CodeBlock>
+
+## Código
+
+<CodeBlock client:load>
+
+```jsx
+import { useState, useCallback, useMemo } from 'react'
+
+const HoverFlipCard = ({ children, imageBackground, className }) => {
+  const [position, setPosition] = useState({ x: 50, y: 50 })
+  const [isHovered, setIsHovered] = useState(false)
+
+  const handleMouseMove = useCallback((e) => {
+    const { left, top, width, height } = e.currentTarget.getBoundingClientRect()
+    const x = ((e.clientX - left) / width) * 100
+    const y = ((e.clientY - top) / height) * 100
+    setPosition({ x, y })
+  }, [])
+
+  const memoizedChildren = useMemo(() => children, [children])
+
+  return (
+    <div
+      className='relative w-96 h-96 mx-auto mt-20 perspective-[1000px]'
+      onMouseMove={handleMouseMove}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <div
+        className={`relative w-full h-full transition-transform duration-500 transform-3d ${
+          isHovered ? 'rotate-y-180' : ''
+        }`}
+      >
+        <div className={`absolute w-full h-full backface-hidden ${className}`}>
+          {memoizedChildren}
+        </div>
+
+        <div
+          className={`absolute w-full h-full backface-hidden rotate-y-180 bg-cover bg-center p-0 overflow-hidden ${className}`}
+          style={{
+            backgroundImage: `url(${imageBackground})`,
+            backgroundPosition: `${position.x}% ${position.y}%`
+          }}
+        >
+          {memoizedChildren}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export default HoverFlipCard
+```
+
+</CodeBlock>
+
+## Propiedades
+
+<CustomTable
+  items={[
+    {
+      prop: 'children',
+      type: 'node',
+      default: '--',
+      description: 'Elemento hijo que se renderizará dentro del componente.'
+    },
+    {
+      prop: 'imageBackground',
+      type: 'string',
+      default: '--',
+      description: 'URL de la imagen de fondo del componente.'
+    },
+    {
+      prop: 'className',
+      type: 'string',
+      default: '--',
+      description: 'Clase CSS adicional que se aplicará al componente.'
+    }
+  ]}
+  client:load
+/>

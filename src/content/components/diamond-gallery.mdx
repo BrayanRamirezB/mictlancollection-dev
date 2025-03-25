@@ -1,0 +1,165 @@
+---
+title: Diamond gallery
+---
+
+import CodeBlock from '../../components/CodeBlock.jsx'
+import Alert from '../../components/Alert.jsx'
+import CustomTable from '../../components/Table/CustomTable.jsx'
+import DiamondGallery from '../../components/DiamondGallery.jsx'
+
+<div className='flex items-center justify-center mx-auto not-prose'>
+  <Alert
+    title='Pista'
+    content='Haz hover sobre una de las tarjetas para ver con mayor detalle su contenido 💠.'
+    type='default'
+    styleVariant='bordered'
+    client:load
+  />
+</div>
+
+<div className='flex items-center justify-center pt-10 pb-20 h-[400px] md:h-[600px] not-prose'>
+  <DiamondGallery
+    images={[
+      {
+        image: '/examples/img-example1.webp',
+        isLink: true,
+        href: '/',
+        target: '_blank',
+        rel: 'noopener noreferrer'
+      },
+      {
+        image: '/examples/img-example15.webp',
+        isLink: false,
+      },
+      {
+        image: '/examples/img-example5.webp',
+        isLink: false,
+      },
+      {
+        image: '/examples/img-example11.webp',
+        isLink: true,
+        href: '/',
+        target: '',
+        rel: ''
+      }
+    ]}
+    client:load
+/>
+
+</div>
+
+## Ejemplo de uso
+
+<CodeBlock client:load>
+
+```jsx
+<DiamondGallery
+  images={[
+    {
+      image: '/examples/img-example1.webp',
+      isLink: true,
+      href: '/',
+      target: '_blank',
+      rel: 'noopener noreferrer'
+    },
+    {
+      image: '/examples/img-example15.webp',
+      isLink: false
+    },
+    {
+      image: '/examples/img-example5.webp',
+      isLink: false
+    },
+    {
+      image: '/examples/img-example11.webp',
+      isLink: true,
+      href: '/',
+      target: '',
+      rel: ''
+    }
+  ]}
+/>
+```
+
+</CodeBlock>
+
+## Código
+
+<CodeBlock client:load>
+
+```jsx
+import { useState } from 'react'
+
+const DiamondGallery = ({ images }) => {
+  const [hoveredIndex, setHoveredIndex] = useState(null)
+
+  const positions = [
+    'top-0 left-1/2 transform -translate-x-1/2 -translate-y-[5%]',
+    'left-0 top-1/2 transform -translate-y-1/2 -translate-x-[5%]',
+    'right-0 top-1/2 transform -translate-y-1/2 translate-x-[5%]',
+    'bottom-0 left-1/2 transform -translate-x-1/2 translate-y-[5%]'
+  ]
+
+  return (
+    <div className='relative aspect-square h-full'>
+      {images.slice(0, 4).map((img, idx) => {
+        const imageElement = (
+          <img
+            src={img.image}
+            alt={`Imagen de galería ${idx + 1}`}
+            className='size-full object-cover -rotate-45 scale-150'
+            onMouseEnter={() => setHoveredIndex(idx)}
+            onMouseLeave={() => setHoveredIndex(null)}
+          />
+        )
+
+        return (
+          <div
+            className={`absolute w-1/2 h-1/2 rotate-45 rounded-lg transition-all duration-500 overflow-hidden 
+              ${positions[idx]}
+              ${hoveredIndex === idx ? 'scale-100 z-1' : 'scale-75 z-0'}
+              ${
+                hoveredIndex !== null && hoveredIndex !== idx
+                  ? 'filter blur-sm grayscale'
+                  : ''
+              }`}
+            key={idx}
+          >
+            {img.isLink ? (
+              <a
+                href={img.href}
+                target={img.target}
+                rel={img.rel}
+                className='block size-full'
+              >
+                {imageElement}
+              </a>
+            ) : (
+              imageElement
+            )}
+          </div>
+        )
+      })}
+    </div>
+  )
+}
+
+export default DiamondGallery
+```
+
+</CodeBlock>
+
+## Propiedades
+
+<CustomTable
+  items={[
+    {
+      prop: 'images',
+      type: 'array',
+      default: '--',
+      description:
+        'Arreglo de imágenes que se utilizarán como fondo de las tarjetas. Debe ser una matriz de imágenes. Cada elemento debe contener una propiedad image que es la URL de la imagen y una opcionalmente isLink que indica si la imagen es un enlace o no. En caso de ser un enlace, se debe proporcionar una propiedad href con la URL del enlace, una propiedad target para indicar si el enlace se abrirá en una nueva pestaña o en una ventana del mismo dominio y una propiedad rel para indicar si el enlace se abrirá sin requerir autenticación.'
+    }
+  ]}
+  client:load
+/>

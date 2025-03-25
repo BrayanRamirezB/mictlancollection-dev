@@ -27,8 +27,32 @@
     {
       "id": 5,
       "title": "Scroll album",
-      "description": "Componente interactivo para galerías horizontales que combina desplazamiento suavizado con efectos visuales dinámicos. Implementa un carrusel optimizado donde las imágenes realizan animaciones 3D (rotación y profundidad) al pasar por el centro de vista",
+      "description": "Componente interactivo para galerías horizontales que combina desplazamiento suavizado con efectos visuales dinámicos. Implementa un carrusel optimizado donde las imágenes realizan animaciones 3D (rotación y profundidad) al pasar por el centro de vista.",
       "image": "/thumbnails/scroll-album.webp"
+    },
+    {
+      "id": 6,
+      "title": "Diamond gallery",
+      "description": "Componente que muestra cuatro imágenes en forma de diamante, con efectos interactivos: al hacer hover sobre una imagen, esta se escala y destaca mientras las demás se desenfocan. Además, las imágenes pueden contener enlaces.",
+      "image": "/thumbnails/diamond-gallery.webp"
+    },
+    {
+      "id": 7,
+      "title": "Image comparator",
+      "description": "Componente interactivo que permite comparar dos imágenes mediante un control deslizante horizontal, con soporte para dispositivos táctiles, accesibilidad y ajuste de tamaño personalizable.",
+      "image": "/thumbnails/image-comparator.webp"
+    },
+    {
+      "id": 8,
+      "title": "Tilt card",
+      "description": "Componente que crea una tarjeta interactiva con efecto 3D fluido que se inclina y escala suavemente según el movimiento del cursor, con personalización de rotación máxima, perspectiva y escala.",
+      "image": "/thumbnails/tilt-card.webp"
+    },
+    {
+      "id": 9,
+      "title": "Hover flip card",
+      "description": "Componente de tarjeta interactiva que gira al hacer hover, mostrando un fondo con efecto de parallax.",
+      "image": "/thumbnails/hover-flip-card.webp"
     }
   ]
 }
