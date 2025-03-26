@@ -53,6 +53,36 @@
       "title": "Hover flip card",
       "description": "Componente de tarjeta interactiva que gira al hacer hover, mostrando un fondo con efecto de parallax.",
       "image": "/thumbnails/hover-flip-card.webp"
+    },
+    {
+      "id": 10,
+      "title": "Animated image",
+      "description": "Componente que muestra una imagen con efectos interactivos: al hover, transiciona de un recorte diamante a rectangular.",
+      "image": "/thumbnails/animated-image.webp"
+    },
+    {
+      "id": 11,
+      "title": "Image stack",
+      "description": "Componente interactivo que muestra imágenes en una pila dinámica con rotación alternada. Al hacer clic, la imagen superior se anima hacia atrás con efecto de desenfoque y escala, rotando las demás en cascada.",
+      "image": "/thumbnails/image-stack.webp"
+    },
+    {
+      "id": 12,
+      "title": "Hover box effect",
+      "description": "Componente que aplica una animación 3D de giro (flip) al hacer hover, con personalización de perspectiva, duración y efectos visuales.",
+      "image": "/thumbnails/hover-box-effect.webp"
+    },
+    {
+      "id": 13,
+      "title": "Image slider",
+      "description": "Componente que muestra una serie de imágenes con una animación de cubrir y descubrir al cambiar entre ellas. Incluye botones de navegación.",
+      "image": "/thumbnails/image-slider.webp"
+    },
+    {
+      "id": 14,
+      "title": "Image stack v2",
+      "description": "Componente que muestra una serie de imágenes en forma de pila con una transformación 3D. Al pasar el cursor sobre una imagen, esta se resalta mientras que las demás se desenfocan mediante un efecto de blur.",
+      "image": "/thumbnails/image-stack-v2.webp"
     }
   ]
 }

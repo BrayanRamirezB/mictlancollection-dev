@@ -1,0 +1,190 @@
+---
+title: Hover box effect
+---
+
+import CodeBlock from '../../components/CodeBlock.jsx'
+import Alert from '../../components/Alert.jsx'
+import CustomTable from '../../components/Table/CustomTable.jsx'
+import HoverBoxEffect from '../../components/HoverBoxEffect.jsx'
+
+<div className='flex items-center justify-center mx-auto not-prose'>
+  <Alert
+    title='Pista'
+    content='Haz hover sobre el componente para ver el efecto de rotación 📦.'
+    type='default'
+    styleVariant='bordered'
+    client:load
+  />
+</div>
+
+<div className='flex items-center justify-center mt-20 mb-20 not-prose'>
+  <HoverBoxEffect client:load>
+    <div className='flex items-center justify-center rounded-xl shadow-lg h-[300px] w-[300px]'>
+      <img
+        src='/examples/img-example4.webp'
+        alt='Imagen de ejemplo 5'
+        className='w-full h-full object-cover'
+      />
+    </div>
+  </HoverBoxEffect>
+</div>
+
+## Ejemplo de uso
+
+<CodeBlock client:load>
+
+```jsx
+<HoverBoxEffect>
+  <div className='flex items-center justify-center rounded-xl shadow-lg h-[300px] w-[300px]'>
+    <img
+      src='/examples/img-example15.webp'
+      alt='Imagen de ejemplo 5'
+      className='w-full h-full object-cover'
+    />
+  </div>
+</HoverBoxEffect>
+```
+
+</CodeBlock>
+
+## Código
+
+<CodeBlock client:load>
+
+```jsx
+import { useState, useLayoutEffect, useRef } from 'react'
+
+const HoverBoxEffect = ({
+  children,
+  perspective = '3000px',
+  transitionDuration = 500,
+  grayscale = true
+}) => {
+  const [dimensions, setDimensions] = useState({ width: 0, height: 0 })
+  const [reduceMotion, setReduceMotion] = useState(false)
+  const [isHovered, setIsHovered] = useState(false)
+  const childRef = useRef(null)
+
+  useLayoutEffect(() => {
+    const updateDimensions = () => {
+      if (childRef.current) {
+        const { offsetWidth: width, offsetHeight: height } = childRef.current
+        setDimensions({ width, height })
+      }
+    }
+
+    const observer = new ResizeObserver(updateDimensions)
+    if (childRef.current) observer.observe(childRef.current)
+
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
+    setReduceMotion(mediaQuery.matches)
+    const motionHandler = (e) => setReduceMotion(e.matches)
+    mediaQuery.addEventListener('change', motionHandler)
+
+    return () => {
+      observer.disconnect()
+      mediaQuery.removeEventListener('change', motionHandler)
+    }
+  }, [])
+
+  const frontTransform = `translateZ(${dimensions.height / 2}px)`
+  const backTransform = `rotateX(-90deg) translateZ(${dimensions.height / 2}px)`
+
+  const handleHover = (state) => {
+    setIsHovered(state)
+  }
+
+  return (
+    <>
+      <div style={{ visibility: 'hidden', position: 'absolute' }}>
+        <div ref={childRef}>{children}</div>
+      </div>
+
+      <div
+        style={{
+          perspective,
+          width: dimensions.width,
+          height: dimensions.height,
+          margin: '0 auto'
+        }}
+      >
+        <div
+          style={{
+            transformStyle: 'preserve-3d',
+            transition: reduceMotion
+              ? 'none'
+              : `transform ${transitionDuration}ms ease-in-out`,
+            transform: isHovered ? 'rotateX(90deg)' : 'none',
+            height: '100%',
+            width: '100%',
+            position: 'relative'
+          }}
+          onMouseEnter={() => handleHover(true)}
+          onMouseLeave={() => handleHover(false)}
+        >
+          <div
+            style={{
+              transform: frontTransform,
+              backfaceVisibility: 'hidden',
+              filter: grayscale ? 'grayscale(1)' : 'none',
+              position: 'absolute',
+              width: '100%',
+              height: '100%'
+            }}
+          >
+            {children}
+          </div>
+
+          <div
+            style={{
+              transform: backTransform,
+              backfaceVisibility: 'hidden',
+              position: 'absolute',
+              width: '100%',
+              height: '100%'
+            }}
+          >
+            {children}
+          </div>
+        </div>
+      </div>
+    </>
+  )
+}
+
+export default HoverBoxEffect
+```
+
+</CodeBlock>
+
+## Propiedades
+
+<CustomTable
+  items={[
+    {
+      prop: 'children',
+      type: 'node',
+      default: '--',
+      description: 'Elemento hijo que se renderizará dentro del componente.'
+    },
+    {
+      prop: 'perspective',
+      type: 'string',
+      default: '3000px',
+      description: 'Valor de perspectiva del componente.'
+    },
+    {
+      prop: 'transitionDuration',
+      type: 'number',
+      default: '500',
+      description: 'Duración del efecto de transición en milisegundos.'
+    },
+    {
+      prop: 'grayscale',
+      type: 'boolean',
+      default: 'true',
+      description: 'Indica si se aplicará el efecto de grisáceo.'
+    }
+  ]}
+  client:load
+/>

@@ -1,0 +1,140 @@
+---
+title: Image stack v2
+---
+
+import CodeBlock from '../../components/CodeBlock.jsx'
+import Alert from '../../components/Alert.jsx'
+import CustomTable from '../../components/Table/CustomTable.jsx'
+import ImageStackv2 from '../../components/ImageStackv2.jsx'
+
+<div className='flex items-center justify-center mx-auto not-prose'>
+  <Alert
+    title='Pista'
+    content='Haz hover sobre las imágenes para ver el efecto de la animación 🖼️.'
+    type='default'
+    styleVariant='bordered'
+    client:load
+  />
+</div>
+
+<div className='flex items-center justify-center mt-20 mb-20 not-prose'>
+  <div className='flex items-center justify-center h-[300px]'>
+    <ImageStackv2
+      images={[
+        '/examples/img-example7.webp',
+        '/examples/img-example11.webp',
+        '/examples/img-example4.webp',
+        '/examples/img-example9.webp',
+        '/examples/img-example14.webp'
+      ]}
+      containerClass='py-6'
+      imgClass='rounded-xl hover:shadow-lg'
+      client:load
+    />
+  </div>
+</div>
+
+## Ejemplo de uso
+
+<CodeBlock client:load>
+
+```jsx
+<div className='flex items-center justify-center h-[300px]'>
+  <ImageStackv2
+    images={[
+      '/examples/img-example7.webp',
+      '/examples/img-example11.webp',
+      '/examples/img-example4.webp',
+      '/examples/img-example9.webp',
+      '/examples/img-example14.webp'
+    ]}
+    containerClass='py-6'
+    imgClass='rounded-xl hover:shadow-lg'
+  />
+</div>
+```
+
+</CodeBlock>
+
+## Código
+
+<CodeBlock client:load>
+
+```jsx
+import { useState } from 'react'
+
+const ImageStackv2 = ({
+  images,
+  imgClass = '',
+  containerClass = '',
+  spaceX = '-60px'
+}) => {
+  const defaultTransform = 'perspective(1000px) rotateY(-45deg)'
+  const [hoveredIndex, setHoveredIndex] = useState(null)
+
+  return (
+    <div
+      className={`flex flex-row items-center justify-center h-full w-full space-x-[${spaceX}] ${containerClass}`}
+    >
+      {images.map((src, index) => {
+        const isHovered = hoveredIndex === index
+        const applyBlur = hoveredIndex !== null && !isHovered
+
+        return (
+          <img
+            key={index}
+            src={src}
+            alt={`Imagen ${index}`}
+            className={`h-[100%] transition-all duration-300 ${imgClass}`}
+            style={{
+              filter: applyBlur ? 'blur(5px) grayscale(1)' : 'none',
+              position: 'relative',
+              zIndex: isHovered ? images.length + 1 : images.length - index,
+              transform: isHovered ? 'none' : defaultTransform
+            }}
+            onMouseEnter={() => setHoveredIndex(index)}
+            onMouseLeave={() => setHoveredIndex(null)}
+          />
+        )
+      })}
+    </div>
+  )
+}
+
+export default ImageStackv2
+```
+
+</CodeBlock>
+
+## Propiedades
+
+<CustomTable
+  items={[
+    {
+      prop: 'images',
+      type: 'array',
+      default: '--',
+      description:
+        'Arreglo de imágenes que se utilizarán como fondo de las tarjetas. Debe ser una matriz de imágenes.'
+    },
+    {
+      prop: 'imgClass',
+      type: 'string',
+      default: '--',
+      description: 'Clase CSS adicional para las imágenes.'
+    },
+    {
+      prop: 'containerClass',
+      type: 'string',
+      default: '--',
+      description: 'Clase CSS adicional para el contenedor.'
+    },
+    {
+      prop: 'spaceX',
+      type: 'string',
+      default: '--',
+      description: 'Espaciado horizontal entre las imágenes.'
+    }
+  ]}
+  client:load
+/>

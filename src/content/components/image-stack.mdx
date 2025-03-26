@@ -1,0 +1,147 @@
+---
+title: Image stack
+---
+
+import CodeBlock from '../../components/CodeBlock.jsx'
+import Alert from '../../components/Alert.jsx'
+import CustomTable from '../../components/Table/CustomTable.jsx'
+import ImageStack from '../../components/ImageStack.jsx'
+
+<div className='flex items-center justify-center mx-auto not-prose'>
+  <Alert
+    title='Pista'
+    content='Haz click sobre la imagen para ver el efecto de cambio de imagen 🖼️.'
+    type='default'
+    styleVariant='bordered'
+    client:load
+  />
+</div>
+
+<div className='flex items-center justify-center mt-10 mb-20 h-[400px] w-[300px] mx-auto not-prose'>
+  <ImageStack
+    images={[
+      '/examples/img-example1.webp',
+      '/examples/img-example2.webp',
+      '/examples/img-example3.webp',
+      '/examples/img-example4.webp'
+    ]}
+    className='rounded-lg shadow-lg'
+    client:load
+  />
+</div>
+
+## Ejemplo de uso
+
+<CodeBlock client:load>
+
+```jsx
+<ImageStack
+  images={[
+    '/examples/img-example1.webp',
+    '/examples/img-example2.webp',
+    '/examples/img-example3.webp',
+    '/examples/img-example4.webp'
+  ]}
+  className='rounded-lg shadow-lg'
+/>
+```
+
+</CodeBlock>
+
+## Código
+
+<CodeBlock client:load>
+
+```jsx
+import { useState } from 'react'
+
+const ImageStack = ({
+  images,
+  rotationDeg = 4,
+  animationDuration = 500,
+  className = ''
+}) => {
+  const [stack, setStack] = useState(images)
+  const [isAnimating, setIsAnimating] = useState(false)
+
+  const handleClick = () => {
+    if (isAnimating) return
+    setIsAnimating(true)
+
+    setTimeout(() => {
+      setStack((prev) => {
+        const [first, ...rest] = prev
+        return [...rest, first]
+      })
+      setIsAnimating(false)
+    }, animationDuration)
+  }
+
+  return (
+    <div className='relative w-full h-full cursor-pointer'>
+      {stack.map((img, index) => {
+        const rotation = index % 2 === 0 ? rotationDeg : -rotationDeg
+        const zIndex = stack.length - index
+        const isTop = index === 0
+
+        return (
+          <div
+            key={img}
+            className={`absolute w-full h-full transition-all duration-500 ease-in-out ${
+              isTop && isAnimating ? 'scale-95 blur-sm' : ''
+            } ${isTop ? 'hover:scale-105' : ''}`}
+            style={{
+              transform: `rotate(${isTop && isAnimating ? 0 : rotation}deg)`,
+              zIndex: zIndex
+            }}
+            onClick={isTop ? handleClick : undefined}
+          >
+            <img
+              src={img}
+              alt='Stack item'
+              className={`w-full h-full object-cover ${className}`}
+            />
+          </div>
+        )
+      })}
+    </div>
+  )
+}
+
+export default ImageStack
+```
+
+</CodeBlock>
+
+## Propiedades
+
+<CustomTable
+  items={[
+    {
+      prop: 'images',
+      type: 'array',
+      default: '--',
+      description:
+        'Arreglo de imágenes que se utilizarán como fondo de las tarjetas. Debe ser una matriz de imágenes.'
+    },
+    {
+      prop: 'rotationDeg',
+      type: 'number',
+      default: '4',
+      description: 'Ángulo de rotación de la imagen en grados.'
+    },
+    {
+      prop: 'animationDuration',
+      type: 'number',
+      default: '500',
+      description: 'Duración del efecto de animación en milisegundos.'
+    },
+    {
+      prop: 'className',
+      type: 'string',
+      default: '--',
+      description: 'Clase CSS adicional para la imagen.'
+    }
+  ]}
+  client:load
+/>

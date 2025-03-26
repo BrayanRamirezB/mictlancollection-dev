@@ -1,0 +1,109 @@
+---
+title: Animated image
+---
+
+import CodeBlock from '../../components/CodeBlock.jsx'
+import Alert from '../../components/Alert.jsx'
+import CustomTable from '../../components/Table/CustomTable.jsx'
+import AnimatedImage from '../../components/AnimatedImage.jsx'
+
+<div className='flex items-center justify-center mx-auto not-prose'>
+  <Alert
+    title='Pista'
+    content='Haz hover sobre la imagen para ver el efecto de la animación ✨.'
+    type='default'
+    styleVariant='bordered'
+    client:load
+  />
+</div>
+
+<div className='flex items-center justify-center pt-20 pb-20 not-prose'>
+  <AnimatedImage
+    src='/examples/img-example8.webp'
+    alt='Imagen de ejemplo 5'
+    client:load
+  />
+</div>
+
+## Ejemplo de uso
+
+<CodeBlock client:load>
+
+```jsx
+<AnimatedImage src='/examples/img-example8.webp' alt='Imagen de ejemplo 5' />
+```
+
+</CodeBlock>
+
+## Código
+
+<CodeBlock client:load>
+
+```jsx
+const AnimatedImage = ({
+  src,
+  alt = 'Imagen animada',
+  size = 400,
+  duration = 500
+}) => {
+  return (
+    <div className='overflow-hidden'>
+      <img
+        src={src}
+        alt={alt}
+        className='w-full h-full rounded-xl object-cover grayscale scale-100 transition-all hover:grayscale-0 hover:scale-95'
+        style={{
+          clipPath: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)',
+          width: `${size}px`,
+          height: `${size}px`,
+          transitionDuration: `${duration}ms`
+        }}
+        onMouseEnter={(e) =>
+          (e.currentTarget.style.clipPath =
+            'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)')
+        }
+        onMouseLeave={(e) =>
+          (e.currentTarget.style.clipPath =
+            'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)')
+        }
+      />
+    </div>
+  )
+}
+
+export default AnimatedImage
+```
+
+</CodeBlock>
+
+## Propiedades
+
+<CustomTable
+  items={[
+    {
+      prop: 'src',
+      type: 'string',
+      default: '--',
+      description: 'URL de la imagen que se va a mostrar.'
+    },
+    {
+      prop: 'alt',
+      type: 'string',
+      default: 'Imagen animada',
+      description: 'Texto alternativo de la imagen.'
+    },
+    {
+      prop: 'size',
+      type: 'number',
+      default: '400',
+      description: 'Tamaño de la imagen en píxeles.'
+    },
+    {
+      prop: 'duration',
+      type: 'number',
+      default: '500',
+      description: 'Duración del efecto de transición en milisegundos.'
+    }
+  ]}
+  client:load
+/>
