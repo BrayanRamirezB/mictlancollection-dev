@@ -1,0 +1,128 @@
+---
+title: Animated gradient text
+---
+
+import CodeBlock from '../../components/CodeBlock.jsx'
+import Alert from '../../components/Alert.jsx'
+import CustomTable from '../../components/Table/CustomTable.jsx'
+import AnimatedGradientText from '../../components/AnimatedGradientText.jsx'
+
+<div className='flex items-center justify-center mx-auto not-prose'>
+  <Alert
+    title='Pista'
+    content='Observa el color de la letra en el ejemplo 👀.'
+    type='default'
+    styleVariant='bordered'
+    client:load
+  />
+</div>
+
+<div className='flex flex-col items-center justify-center mt-60 mb-60 not-prose'>
+  <AnimatedGradientText
+    text='Texto animado.'
+    colors={['#ff0000', '#fff', '#00ff00']}
+    className='text-6xl font-extrabold'
+    direction='to left'
+    speed={4}
+    client:load
+  />
+</div>
+
+## Ejemplo de uso
+
+<CodeBlock client:load>
+
+```jsx
+<AnimatedGradientText
+  text='Texto animado.'
+  colors={['#ff0000', '#fff', '#00ff00']}
+  className='text-6xl font-extrabold'
+  direction='to left'
+  speed={4}
+/>
+```
+
+</CodeBlock>
+
+## Código
+
+<CodeBlock client:load>
+
+```jsx
+const AnimatedGradientText = ({
+  text,
+  colors,
+  direction = 'to right',
+  speed = 5,
+  className = ''
+}) => {
+  const isVertical = direction.includes('top') || direction.includes('bottom')
+
+  return (
+    <div className={`inline-block ${className}`}>
+      <style>{`
+        @keyframes gradientShift {
+          0% { background-position: ${isVertical ? '50% 0%' : '0% 50%'}; }
+          50% { background-position: ${isVertical ? '50% 100%' : '100% 50%'}; }
+          100% { background-position: ${isVertical ? '50% 0%' : '0% 50%'}; }
+        }
+      `}</style>
+
+      <span
+        className='text-transparent bg-clip-text'
+        style={{
+          backgroundImage: `linear-gradient(${direction}, ${colors.join(
+            ', '
+          )})`,
+          backgroundSize: isVertical ? '100% 200%' : '200% 100%',
+          animation: `gradientShift ${speed}s ease infinite`
+        }}
+      >
+        {text}
+      </span>
+    </div>
+  )
+}
+
+export default AnimatedGradientText
+```
+
+</CodeBlock>
+
+## Propiedades
+
+<CustomTable
+  items={[
+    {
+      prop: 'text',
+      type: 'string',
+      default: '--',
+      description: 'Texto a revelar.'
+    },
+    {
+      prop: 'colors',
+      type: 'array',
+      default: '--',
+      description: 'Colores a utilizar para el gradiente.'
+    },
+    {
+      prop: 'direction',
+      type: 'string',
+      default: 'to right',
+      description: 'Dirección del gradiente.'
+    },
+    {
+      prop: 'speed',
+      type: 'number',
+      default: '5',
+      description: 'Velocidad del gradiente.'
+    },
+    {
+      prop: 'className',
+      type: 'string',
+      default: '--',
+      description: 'Clase a aplicar al elemento.'
+    }
+  ]}
+  client:load
+/>

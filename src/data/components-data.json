@@ -83,6 +83,36 @@
       "title": "Image stack v2",
       "description": "Componente que muestra una serie de imágenes en forma de pila con una transformación 3D. Al pasar el cursor sobre una imagen, esta se resalta mientras que las demás se desenfocan mediante un efecto de blur.",
       "image": "/thumbnails/image-stack-v2.webp"
+    },
+    {
+      "id": 15,
+      "title": "Animated text",
+      "description": "Animación de texto que revela caracteres individualmente con efecto de ascenso, activado al hacer scroll hasta el elemento.",
+      "image": "/thumbnails/animated-text.webp"
+    },
+    {
+      "id": 16,
+      "title": "Blurred text effect",
+      "description": "Componente que muestra texto con palabras difuminadas y un borde resaltado que se desplaza suavemente entre ellas, permitiendo interacción por hover o animación automática. ",
+      "image": "/thumbnails/blurred-text-effect.webp"
+    },
+    {
+      "id": 17,
+      "title": "Random reveal text",
+      "description": "Componente que muestra texto con una animación de revelación mediante caracteres aleatorios. Soporta activación por hover y revelación progresiva/simultánea.",
+      "image": "/thumbnails/random-reveal-text.webp"
+    },
+    {
+      "id": 18,
+      "title": "Animated gradient text",
+      "description": "Componente que muestra un texto con un efecto de gradiente desplazante, configurable en dirección (horizontal/vertical) y velocidad, adaptándose dinámicamente al usar colores y parámetros personalizables. ",
+      "image": "/thumbnails/animated-gradient-text.webp"
+    },
+    {
+      "id": 19,
+      "title": "Shiny wrapper",
+      "description": "Componente que aplica un efecto de brillo animado sobre su contenido. Permite personalizar la velocidad, repetición y estilo del brillo.",
+      "image": "/thumbnails/shiny-wrapper.webp"
     }
   ]
 }

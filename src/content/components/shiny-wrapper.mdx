@@ -1,0 +1,175 @@
+---
+title: Shiny wrapper
+---
+
+import CodeBlock from '../../components/CodeBlock.jsx'
+import Alert from '../../components/Alert.jsx'
+import CustomTable from '../../components/Table/CustomTable.jsx'
+import ShinyWrapper from '../../components/ShinyWrapper.jsx'
+
+<div className='flex items-center justify-center mx-auto not-prose'>
+  <Alert
+    title='Pista'
+    content='Observa el efecto de brillo en el ejemplo 🪩.'
+    type='default'
+    styleVariant='bordered'
+    client:load
+  />
+</div>
+
+<div className='flex flex-col items-center justify-center mt-20 mb-20 not-prose'>
+  <ShinyWrapper className='rounded-xl' client:load>
+    <figure className='h-[400px] w-[300px] overflow-hidden rounded-xl'>
+      <img
+        src='/examples/img-example13.webp'
+        alt='Shiny wrapper'
+        className='w-full h-full object-cover'
+      />
+    </figure>
+  </ShinyWrapper>
+</div>
+
+## Ejemplo de uso
+
+<CodeBlock client:load>
+
+```jsx
+<ShinyWrapper className='rounded-xl'>
+  <figure className='h-[400px] w-[300px] overflow-hidden rounded-xl'>
+    <img
+      src='/examples/img-example13.webp'
+      alt='Shiny wrapper'
+      className='w-full h-full object-cover'
+    />
+  </figure>
+</ShinyWrapper>
+```
+
+</CodeBlock>
+
+## Código
+
+<CodeBlock client:load>
+
+```jsx
+import { useState } from 'react'
+
+const ShinyWrapper = ({
+  children,
+  animationSpeed = 1500,
+  loop = true,
+  loopDelay = 200,
+  hoverOnly = false,
+  shinyStyle = 'gradient',
+  className = '',
+  shinyWidth = '30%'
+}) => {
+  const [isHovered, setIsHovered] = useState(false)
+
+  const totalDuration = loop ? animationSpeed + loopDelay : animationSpeed
+  const movementPercentage = loop ? (animationSpeed / totalDuration) * 100 : 100
+
+  const shouldAnimate = hoverOnly ? isHovered : true
+
+  const animationStyle = {
+    animation: shouldAnimate
+      ? `shine ${totalDuration}ms linear ${loop ? 'infinite' : '1'} ${
+          !loop ? 'forwards' : ''
+        }`
+      : 'none'
+  }
+
+  const shinyClass = {
+    gradient: 'bg-gradient-to-r from-transparent via-white/30 to-transparent',
+    solid: 'bg-white/30'
+  }
+
+  return (
+    <div
+      className={`relative overflow-hidden ${className}`}
+      onMouseEnter={hoverOnly ? () => setIsHovered(true) : undefined}
+      onMouseLeave={hoverOnly ? () => setIsHovered(false) : undefined}
+    >
+      <div
+        className={`absolute z-1 top-0 -left-1/2 h-full -skew-x-14 ${shinyClass[shinyStyle]}`}
+        style={{ ...animationStyle, width: shinyWidth }}
+      />
+      <div className='relative'>{children}</div>
+
+      <style>
+        {`
+          @keyframes shine {
+            0% {
+              left: -50%;
+            }
+            ${loop ? `${movementPercentage}%` : '100%'} {
+              left: 150%;
+            }
+            ${loop ? '100% { left: 150%; }' : ''}
+          }
+        `}
+      </style>
+    </div>
+  )
+}
+
+export default ShinyWrapper
+```
+
+</CodeBlock>
+
+## Propiedades
+
+<CustomTable
+  items={[
+    {
+      prop: 'children',
+      type: 'node',
+      default: '--',
+      description: 'Elemento hijo a envolver.'
+    },
+    {
+      prop: 'animationSpeed',
+      type: 'number',
+      default: '1500',
+      description: 'Velocidad de animación.'
+    },
+    {
+      prop: 'loop',
+      type: 'boolean',
+      default: 'true',
+      description: 'Si el efecto de animación debe ser infinito.'
+    },
+    {
+      prop: 'loopDelay',
+      type: 'number',
+      default: '200',
+      description: 'Retraso entre cada iteración del efecto de animación.'
+    },
+    {
+      prop: 'hoverOnly',
+      type: 'boolean',
+      default: 'false',
+      description: 'Si solo debe animarse al pasar el mouse.'
+    },
+    {
+      prop: 'shinyStyle',
+      type: 'string',
+      default: 'gradient',
+      description: 'Estilo del brillo.'
+    },
+    {
+      prop: 'className',
+      type: 'string',
+      default: '--',
+      description: 'Clase a aplicar al elemento.'
+    },
+    {
+      prop: 'shinyWidth',
+      type: 'string',
+      default: '30%',
+      description: 'Ancho del brillo.'
+    }
+  ]}
+  client:load
+/>

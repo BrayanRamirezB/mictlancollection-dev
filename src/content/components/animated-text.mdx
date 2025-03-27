@@ -1,0 +1,158 @@
+---
+title: Animated text
+---
+
+import CodeBlock from '../../components/CodeBlock.jsx'
+import Alert from '../../components/Alert.jsx'
+import CustomTable from '../../components/Table/CustomTable.jsx'
+import AnimatedText from '../../components/AnimatedText.jsx'
+
+<div className='flex items-center justify-center mx-auto not-prose'>
+  <Alert
+    title='Pista'
+    content='Recarga la página para ver el efecto del componente 👀.'
+    type='default'
+    styleVariant='bordered'
+    client:load
+  />
+</div>
+
+<div className='flex flex-col items-center justify-center mt-60 mb-60 not-prose'>
+  <AnimatedText
+    text='Esto es un texto animado ✨.'
+    className='text-6xl font-extrabold'
+    client:load
+  />
+</div>
+
+## Ejemplo de uso
+
+<CodeBlock client:load>
+
+```jsx
+<AnimatedText
+  text='Esto es un texto animado ✨.'
+  className='text-6xl font-extrabold'
+  client:load
+/>
+```
+
+</CodeBlock>
+
+## Código
+
+<CodeBlock client:load>
+
+```jsx
+import { useEffect, useRef, useState } from 'react'
+
+const AnimatedText = ({
+  text = '',
+  delayPerChar = 100,
+  className = '',
+  intersectionThreshold = 0.2
+}) => {
+  const [isVisible, setIsVisible] = useState(false)
+  const containerRef = useRef(null)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true)
+        }
+      },
+      {
+        threshold: Math.min(Math.max(intersectionThreshold, 0), 1),
+        rootMargin: '0px 0px -50px 0px'
+      }
+    )
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current)
+    }
+
+    return () => {
+      if (containerRef.current) {
+        observer.unobserve(containerRef.current)
+      }
+    }
+  }, [intersectionThreshold])
+
+  return (
+    <div ref={containerRef} className={`flex overflow-hidden ${className}`}>
+      {text.split('').map((char, index) => (
+        <span
+          key={index}
+          className={`inline-block opacity-0 ${
+            isVisible ? 'animate-rise-up' : ''
+          }`}
+          style={{ animationDelay: `${index * delayPerChar}ms` }}
+        >
+          {char === ' ' ? '\u00A0' : char}
+        </span>
+      ))}
+    </div>
+  )
+}
+
+export default AnimatedText
+```
+
+</CodeBlock>
+
+## Estilos y animaciones
+
+<CodeBlock client:load>
+
+```css
+@theme {
+  --animate-rise-up: rise-up 0.6s ease-in-out forwards;
+
+  @keyframes rise-up {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+```
+
+</CodeBlock>
+
+## Propiedades
+
+<CustomTable
+  items={[
+    {
+      prop: 'text',
+      type: 'string',
+      default: '--',
+      description: 'Texto a animar.'
+    },
+    {
+      prop: 'delayPerChar',
+      type: 'number',
+      default: '100',
+      description: 'Espaciado entre los caracteres en milisegundos.'
+    },
+    {
+      prop: 'className',
+      type: 'string',
+      default: '--',
+      description: 'Clase a aplicar al componente.'
+    },
+    {
+      prop: 'intersectionThreshold',
+      type: 'number',
+      default: '0.2',
+      description:
+        'Porcentaje de visibilidad del componente para iniciar la animación.'
+    }
+  ]}
+  client:load
+/>
