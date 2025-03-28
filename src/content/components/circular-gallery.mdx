@@ -1,0 +1,167 @@
+---
+title: Circular gallery
+---
+
+import CodeBlock from '../../components/CodeBlock.jsx'
+import Alert from '../../components/Alert.jsx'
+import CustomTable from '../../components/Table/CustomTable.jsx'
+import CircularGallery from '../../components/CircularGallery.jsx'
+
+<div className='flex items-center justify-center mx-auto not-prose'>
+  <Alert
+    title='Pista'
+    content='Haz click sobre una de las tarjetas a la izquierda o derecha 🪄.'
+    type='default'
+    styleVariant='bordered'
+    client:load
+  />
+</div>
+
+<div className='flex items-center justify-center mt-10 mb-20 not-prose'>
+  <div className='flex items-center justify-center h-[400px] w-[800px]'>
+    <CircularGallery
+      images={[
+        '/examples/img-example1.webp',
+        '/examples/img-example2.webp',
+        '/examples/img-example3.webp',
+        '/examples/img-example4.webp',
+        '/examples/img-example5.webp',
+        '/examples/img-example6.webp',
+        '/examples/img-example7.webp',
+        '/examples/img-example8.webp',
+        '/examples/img-example9.webp',
+        '/examples/img-example10.webp'
+      ]}
+      classImage='rounded-lg'
+      autoPlay
+      client:load
+    />
+  </div>
+</div>
+
+## Ejemplo de uso
+
+<CodeBlock client:load>
+
+```jsx
+<div className='flex items-center justify-center h-[400px] w-[800px]'>
+  <CircularGallery
+    images={[
+      '/examples/img-example1.webp',
+      '/examples/img-example2.webp',
+      '/examples/img-example3.webp',
+      '/examples/img-example4.webp',
+      '/examples/img-example5.webp',
+      '/examples/img-example6.webp',
+      '/examples/img-example7.webp',
+      '/examples/img-example8.webp',
+      '/examples/img-example9.webp',
+      '/examples/img-example10.webp'
+    ]}
+    classImage='rounded-lg'
+    autoPlay
+  />
+</div>
+```
+
+</CodeBlock>
+
+## Código
+
+<CodeBlock client:load>
+
+```jsx
+import { useState, useEffect } from 'react'
+
+const CircularGallery = ({
+  images,
+  classImage = '',
+  autoPlay = false,
+  delay = 3000
+}) => {
+  const [activeIndex, setActiveIndex] = useState(0)
+  const total = images.length
+  const prevIndex = (activeIndex - 1 + total) % total
+  const nextIndex = (activeIndex + 1) % total
+
+  useEffect(() => {
+    if (!autoPlay) return
+
+    const interval = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % total)
+    }, delay)
+
+    return () => clearInterval(interval)
+  }, [autoPlay, total])
+
+  const getCardStyle = (index) => {
+    if (index === activeIndex) {
+      return 'transform translate-x-0 scale-100 opacity-100 z-10'
+    } else if (index === prevIndex) {
+      return 'transform -translate-x-[40%] scale-[0.8] opacity-40 z-0 grayscale blur-[6px]'
+    } else if (index === nextIndex) {
+      return 'transform translate-x-[40%] scale-[0.8] opacity-40 z-0 grayscale blur-[6px]'
+    } else {
+      return 'hidden'
+    }
+  }
+
+  return (
+    <div className='w-full max-w-[100%] h-full flex justify-center items-center transform-3d'>
+      <div className='relative w-full h-full'>
+        {images.map((src, index) => (
+          <div
+            key={index}
+            onClick={() => setActiveIndex(index)}
+            className={`absolute w-3/5 h-full left-0 right-0 mx-auto transition-transform duration-500 ease-linear cursor-pointer ${getCardStyle(
+              index
+            )}`}
+          >
+            <img
+              src={src}
+              alt={`Imagen ${index + 1}`}
+              className={`w-full h-full object-cover ${classImage}`}
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+export default CircularGallery
+```
+
+</CodeBlock>
+
+## Propiedades
+
+<CustomTable
+  items={[
+    {
+      prop: 'images',
+      type: 'array',
+      default: '--',
+      description: 'Array de URLs de las imágenes a mostrar en la galería.'
+    },
+    {
+      prop: 'classImage',
+      type: 'string',
+      default: '--',
+      description: 'Clase CSS para la imagen.'
+    },
+    {
+      prop: 'autoPlay',
+      type: 'boolean',
+      default: 'true',
+      description: 'Indica si la galería debe reproducirse automáticamente.'
+    },
+    {
+      prop: 'delay',
+      type: 'number',
+      default: '3000',
+      description: 'Tiempo de espera entre imágenes en milisegundos.'
+    }
+  ]}
+  client:load
+/>

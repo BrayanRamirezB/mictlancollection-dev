@@ -1,0 +1,145 @@
+---
+title: Spotlight wrapper
+---
+
+import CodeBlock from '../../components/CodeBlock.jsx'
+import Alert from '../../components/Alert.jsx'
+import CustomTable from '../../components/Table/CustomTable.jsx'
+import SpotlightWrapper from '../../components/SpotlightWrapper.jsx'
+
+<div className='flex items-center justify-center mx-auto not-prose'>
+  <Alert
+    title='Pista'
+    content='Mueve el cursor sobre la imagen para ver el efecto de luz 🔦.'
+    type='default'
+    styleVariant='bordered'
+    client:load
+  />
+</div>
+
+<div className='flex items-center justify-center mt-10 mb-20 not-prose'>
+  <div className='flex items-center justify-center'>
+    <SpotlightWrapper className='rounded-xl' client:load>
+      <div className='p-8 bg-gray-900 text-white h-[500px] w-[400px]'>
+        <h1 className='text-4xl font-bold'>Hover me!</h1>
+        <p className='mt-4'>Este contenido tendrá el efecto spotlight</p>
+      </div>
+    </SpotlightWrapper>
+  </div>
+</div>
+
+## Ejemplo de uso
+
+<CodeBlock client:load>
+
+```jsx
+<SpotlightWrapper className='rounded-xl'>
+  <div className='p-8 bg-gray-900 text-white h-[500px] w-[400px]'>
+    <h1 className='text-4xl font-bold'>Hover me!</h1>
+    <p className='mt-4'>Este contenido tendrá el efecto spotlight</p>
+  </div>
+</SpotlightWrapper>
+```
+
+</CodeBlock>
+
+## Código
+
+<CodeBlock client:load>
+
+```jsx
+import { useState } from 'react'
+
+const SpotlightWrapper = ({
+  children,
+  className = '',
+  size = 100,
+  blur = 60,
+  color = '255, 255, 255',
+  viaOpacity = 0.3
+}) => {
+  const [opacity, setOpacity] = useState(0)
+  const [position, setPosition] = useState({ x: 0, y: 0 })
+
+  const handleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect()
+    setPosition({
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top
+    })
+  }
+
+  return (
+    <div
+      className={`relative overflow-hidden ${className}`}
+      onMouseEnter={() => setOpacity(100)}
+      onMouseLeave={() => setOpacity(0)}
+      onMouseMove={handleMouseMove}
+    >
+      {children}
+
+      <div
+        className='absolute pointer-events-none transition-opacity duration-300 rounded-full'
+        style={{
+          opacity: `${opacity}%`,
+          left: `${position.x}px`,
+          top: `${position.y}px`,
+          transform: 'translate(-50%, -50%)',
+          width: `${size}px`,
+          height: `${size}px`,
+          filter: `blur(${blur}px)`,
+          backgroundImage: `linear-gradient(to right, rgba(${color}, 0), rgba(${color}, ${viaOpacity}), rgba(${color}, 0))`
+        }}
+      />
+    </div>
+  )
+}
+
+export default SpotlightWrapper
+```
+
+</CodeBlock>
+
+## Propiedades
+
+<CustomTable
+  items={[
+    {
+      prop: 'children',
+      type: 'node',
+      default: '--',
+      description: 'Elemento hijo que se renderizará dentro del componente.'
+    },
+    {
+      prop: 'className',
+      type: 'string',
+      default: '--',
+      description: 'Clase CSS para el componente.'
+    },
+    {
+      prop: 'size',
+      type: 'number',
+      default: '100',
+      description: 'Tamaño del elemento en píxeles.'
+    },
+    {
+      prop: 'blur',
+      type: 'number',
+      default: '60',
+      description: 'Efecto de blur del elemento en píxeles.'
+    },
+    {
+      prop: 'color',
+      type: 'string',
+      default: '255, 255, 255',
+      description: 'Color del gradiente.'
+    },
+    {
+      prop: 'viaOpacity',
+      type: 'number',
+      default: '0.3',
+      description: 'Opacidad del gradiente en el punto medio.'
+    }
+  ]}
+  client:load
+/>

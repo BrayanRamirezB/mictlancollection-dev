@@ -113,6 +113,30 @@
       "title": "Shiny wrapper",
       "description": "Componente que aplica un efecto de brillo animado sobre su contenido. Permite personalizar la velocidad, repetición y estilo del brillo.",
       "image": "/thumbnails/shiny-wrapper.webp"
+    },
+    {
+      "id": 20,
+      "title": "Circular gallery",
+      "description": "Componente de carrusel circular con navegación manual/automática. Muestra una imagen central activa con efectos visuales (escala, opacidad, filtros) y dos imágenes laterales difuminadas.",
+      "image": "/thumbnails/circular-gallery.webp"
+    },
+    {
+      "id": 21,
+      "title": "Spotlight wrapper",
+      "description": "Componente que crea un efecto de luz focalizada dinámica que sigue el cursor. Permite personalizar tamaño, color RGB, intensidad de desenfoque y opacidad del gradiente.",
+      "image": "/thumbnails/spotlight-wrapper.webp"
+    },
+    {
+      "id": 22,
+      "title": "Masonry grid",
+      "description": "Componente que organiza imágenes en una cuadrícula tipo mosaico (masonry) con columnas personalizables. Distribuye las imágenes equitativamente entre las columnas usando un patrón circular.",
+      "image": "/thumbnails/masonry-grid.webp"
+    },
+    {
+      "id": 23,
+      "title": "Pixelated card",
+      "description": "Componente que revela contenido mediante una animación de cuadrícula pixelada al hacer hover. Alterna entre un filtro grayscale y colores vivos con transiciones aleatorias de celdas, permitiendo personalizar densidad y color del efecto.",
+      "image": "/thumbnails/pixelated-card.webp"
     }
   ]
 }
