@@ -13,9 +13,5 @@ export default defineConfig({
     plugins: [tailwindcss()]
   },
 
-  integrations: [react(), mdx()],
-
-  experimental: {
-    svg: true
-  }
+  integrations: [react(), mdx()]
 })
