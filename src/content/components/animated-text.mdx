@@ -6,6 +6,7 @@ import CodeBlock from '../../components/CodeBlock.jsx'
 import Alert from '../../components/Alert.jsx'
 import CustomTable from '../../components/Table/CustomTable.jsx'
 import AnimatedText from '../../components/AnimatedText.jsx'
+import ResetWrapper from '../../components/ResetWrapper.jsx'
 
 <div className='flex items-center justify-center mx-auto not-prose'>
   <Alert
@@ -17,12 +18,14 @@ import AnimatedText from '../../components/AnimatedText.jsx'
   />
 </div>
 
-<div className='flex flex-col items-center justify-center mt-60 mb-60 not-prose'>
-  <AnimatedText
-    text='Esto es un texto animado ✨.'
-    className='text-6xl font-extrabold'
-    client:load
-  />
+<div className='flex flex-col items-center justify-center my-40 not-prose'>
+  <ResetWrapper client:load>
+    <AnimatedText
+      text='Esto es un texto animado ✨.'
+      className='text-6xl font-extrabold'
+      client:load
+    />
+  </ResetWrapper>
 </div>
 
 ## Ejemplo de uso

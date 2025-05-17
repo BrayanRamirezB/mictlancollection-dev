@@ -6,6 +6,7 @@ import CodeBlock from '../../components/CodeBlock.jsx'
 import Alert from '../../components/Alert.jsx'
 import CustomTable from '../../components/Table/CustomTable.jsx'
 import RandomRevealText from '../../components/RandomRevealText.jsx'
+import ResetWrapper from '../../components/ResetWrapper.jsx'
 
 <div className='flex items-center justify-center mx-auto not-prose'>
   <Alert
@@ -17,13 +18,15 @@ import RandomRevealText from '../../components/RandomRevealText.jsx'
   />
 </div>
 
-<div className='flex flex-col items-center justify-center mt-60 mb-60 not-prose'>
-  <RandomRevealText
-    text='Texto animado visible.'
-    className='text-6xl font-extrabold'
-    progressive
-    client:load
-  />
+<div className='flex flex-col items-center justify-center h-[500px] not-prose'>
+  <ResetWrapper client:load>
+    <RandomRevealText
+      text='Texto animado visible.'
+      className='text-6xl font-extrabold'
+      progressive
+      client:load
+    />
+  </ResetWrapper>
 </div>
 
 ## Ejemplo de uso

@@ -6,6 +6,7 @@ import CodeBlock from '../../components/CodeBlock.jsx'
 import Alert from '../../components/Alert.jsx'
 import CustomTable from '../../components/Table/CustomTable.jsx'
 import StackedCards from '../../components/StackedCards.jsx'
+import ResetWrapper from '../../components/ResetWrapper.jsx'
 
 <div className='flex items-center justify-center mx-auto not-prose'>
   <Alert
@@ -18,19 +19,21 @@ import StackedCards from '../../components/StackedCards.jsx'
 </div>
 
 <div className='flex items-center justify-center pt-10 pb-20 not-prose'>
-  <StackedCards
-    images={[
-      '/examples/img-example11.webp',
-      '/examples/img-example12.webp',
-      '/examples/img-example13.webp',
-      '/examples/img-example14.webp',
-      '/examples/img-example15.webp'
-    ]}
-    width={300}
-    height={350}
-    className='rounded-3xl shadow-lg'
-    client:load
-  />
+  <ResetWrapper client:load>
+    <StackedCards
+      images={[
+        '/examples/img-example11.webp',
+        '/examples/img-example12.webp',
+        '/examples/img-example13.webp',
+        '/examples/img-example14.webp',
+        '/examples/img-example15.webp'
+      ]}
+      width={300}
+      height={350}
+      className='rounded-3xl shadow-lg'
+      client:load
+    />
+  </ResetWrapper>
 </div>
 
 ## Ejemplo de uso
