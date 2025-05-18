@@ -5,7 +5,7 @@ title: Sliding card
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Alert from '../../components/Alert.jsx'
 import CustomTable from '../../components/Table/CustomTable.jsx'
-import SlidingCard from '../../components/SlidingCard.jsx'
+import DemoSlidingCard from '../../components/demos/DemoSlidingCard.jsx'
 
 <div className='flex items-center justify-center mx-auto not-prose'>
   <Alert
@@ -17,15 +17,7 @@ import SlidingCard from '../../components/SlidingCard.jsx'
   />
 </div>
 
-<div className='flex items-center justify-center pt-10 pb-20 not-prose'>
-  <SlidingCard className='h-[400px] w-[280px]' client:load>
-    <img
-      src='/examples/img-example1.webp'
-      alt='img-example1'
-      className='size-full object-cover rounded-xl shadow-lg'
-    />
-  </SlidingCard>
-</div>
+<DemoSlidingCard client:load />
 
 ## Ejemplo de uso
 
