@@ -5,7 +5,7 @@ title: Blurred background cards
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Alert from '../../components/Alert.jsx'
 import CustomTable from '../../components/Table/CustomTable.jsx'
-import BBCards from '../../components/BBCards.jsx'
+import DemoBBCards from '../../components/demos/DemoBBCards.jsx'
 
 <div className='flex items-center justify-center mx-auto not-prose'>
   <Alert
@@ -17,19 +17,8 @@ import BBCards from '../../components/BBCards.jsx'
   />
 </div>
 
-<div className='flex flex-col items-center justify-center pt-10 pb-20'>
-  <BBCards
-    images={[
-      '/mictlantecuhtli.webp',
-      '/mictlantecuhtli.webp',
-      '/mictlantecuhtli.webp',
-      '/mictlantecuhtli.webp',
-      '/mictlantecuhtli.webp',
-      '/mictlantecuhtli.webp',
-      '/mictlantecuhtli.webp'
-    ]}
-    client:load
-  />
+<div className='flex flex-col items-center justify-center py-20'>
+  <DemoBBCards client:load />
 </div>
 
 ## Ejemplo de uso
