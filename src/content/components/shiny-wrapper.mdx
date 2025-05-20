@@ -5,7 +5,7 @@ title: Shiny wrapper
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Alert from '../../components/Alert.jsx'
 import CustomTable from '../../components/Table/CustomTable.jsx'
-import ShinyWrapper from '../../components/ShinyWrapper.jsx'
+import DemoShinyWrapper from '../../components/demos/DemoShinyWrapper.jsx'
 
 <div className='flex items-center justify-center mx-auto not-prose'>
   <Alert
@@ -17,17 +17,7 @@ import ShinyWrapper from '../../components/ShinyWrapper.jsx'
   />
 </div>
 
-<div className='flex flex-col items-center justify-center mt-20 mb-20 not-prose'>
-  <ShinyWrapper className='rounded-xl' client:load>
-    <figure className='h-[400px] w-[300px] overflow-hidden rounded-xl'>
-      <img
-        src='/examples/img-example13.webp'
-        alt='Shiny wrapper'
-        className='w-full h-full object-cover'
-      />
-    </figure>
-  </ShinyWrapper>
-</div>
+<DemoShinyWrapper client:load />
 
 ## Ejemplo de uso
 
