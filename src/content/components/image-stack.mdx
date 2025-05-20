@@ -5,7 +5,7 @@ title: Image stack
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Alert from '../../components/Alert.jsx'
 import CustomTable from '../../components/Table/CustomTable.jsx'
-import ImageStack from '../../components/ImageStack.jsx'
+import DemoImageStack from '../../components/demos/DemoImageStack.jsx'
 
 <div className='flex items-center justify-center mx-auto not-prose'>
   <Alert
@@ -17,18 +17,7 @@ import ImageStack from '../../components/ImageStack.jsx'
   />
 </div>
 
-<div className='flex items-center justify-center mt-10 mb-20 h-[400px] w-[300px] mx-auto not-prose'>
-  <ImageStack
-    images={[
-      '/examples/img-example1.webp',
-      '/examples/img-example2.webp',
-      '/examples/img-example3.webp',
-      '/examples/img-example4.webp'
-    ]}
-    className='rounded-lg shadow-lg'
-    client:load
-  />
-</div>
+<DemoImageStack client:load />
 
 ## Ejemplo de uso
 
