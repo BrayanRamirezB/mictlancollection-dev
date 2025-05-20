@@ -6,6 +6,7 @@ import CodeBlock from '../../components/CodeBlock.jsx'
 import Alert from '../../components/Alert.jsx'
 import CustomTable from '../../components/Table/CustomTable.jsx'
 import HoverBoxEffect from '../../components/HoverBoxEffect.jsx'
+import DemoHoverBoxEffect from '../../components/demos/DemoHoverBoxEffect.jsx'
 
 <div className='flex items-center justify-center mx-auto not-prose'>
   <Alert
@@ -17,17 +18,7 @@ import HoverBoxEffect from '../../components/HoverBoxEffect.jsx'
   />
 </div>
 
-<div className='flex items-center justify-center mt-20 mb-20 not-prose'>
-  <HoverBoxEffect client:load>
-    <div className='flex items-center justify-center rounded-xl shadow-lg h-[300px] w-[300px]'>
-      <img
-        src='/examples/img-example4.webp'
-        alt='Imagen de ejemplo 5'
-        className='w-full h-full object-cover'
-      />
-    </div>
-  </HoverBoxEffect>
-</div>
+<DemoHoverBoxEffect client:load />
 
 ## Ejemplo de uso
 
