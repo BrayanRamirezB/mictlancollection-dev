@@ -5,7 +5,7 @@ title: Spotlight wrapper
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Alert from '../../components/Alert.jsx'
 import CustomTable from '../../components/Table/CustomTable.jsx'
-import SpotlightWrapper from '../../components/SpotlightWrapper.jsx'
+import DemoSpotlightWrapper from '../../components/demos/DemoSpotlightWrapper.jsx'
 
 <div className='flex items-center justify-center mx-auto not-prose'>
   <Alert
@@ -17,16 +17,7 @@ import SpotlightWrapper from '../../components/SpotlightWrapper.jsx'
   />
 </div>
 
-<div className='flex items-center justify-center mt-10 mb-20 not-prose'>
-  <div className='flex items-center justify-center'>
-    <SpotlightWrapper className='rounded-xl' client:load>
-      <div className='p-8 bg-gray-900 text-white h-[500px] w-[400px]'>
-        <h1 className='text-4xl font-bold'>Hover me!</h1>
-        <p className='mt-4'>Este contenido tendrá el efecto spotlight</p>
-      </div>
-    </SpotlightWrapper>
-  </div>
-</div>
+<DemoSpotlightWrapper client:load />
 
 ## Ejemplo de uso
 
