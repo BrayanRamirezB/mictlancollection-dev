@@ -5,8 +5,7 @@ title: Random reveal text
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Alert from '../../components/Alert.jsx'
 import CustomTable from '../../components/Table/CustomTable.jsx'
-import RandomRevealText from '../../components/RandomRevealText.jsx'
-import ResetWrapper from '../../components/ResetWrapper.jsx'
+import DemoRandomRevealText from '../../components/demos/DemoRandomRevealText.jsx'
 
 <div className='flex items-center justify-center mx-auto not-prose'>
   <Alert
@@ -18,15 +17,8 @@ import ResetWrapper from '../../components/ResetWrapper.jsx'
   />
 </div>
 
-<div className='flex flex-col items-center justify-center h-[500px] not-prose'>
-  <ResetWrapper client:load>
-    <RandomRevealText
-      text='Texto animado visible.'
-      className='text-6xl font-extrabold'
-      progressive
-      client:load
-    />
-  </ResetWrapper>
+<div className='flex flex-col items-center justify-center h-[700px]'>
+  <DemoRandomRevealText client:load />
 </div>
 
 ## Ejemplo de uso
