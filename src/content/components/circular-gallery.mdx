@@ -5,7 +5,7 @@ title: Circular gallery
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Alert from '../../components/Alert.jsx'
 import CustomTable from '../../components/Table/CustomTable.jsx'
-import CircularGallery from '../../components/CircularGallery.jsx'
+import DemoCircularGallery from '../../components/demos/DemoCircularGallery.jsx'
 
 <div className='flex items-center justify-center mx-auto not-prose'>
   <Alert
@@ -17,27 +17,7 @@ import CircularGallery from '../../components/CircularGallery.jsx'
   />
 </div>
 
-<div className='flex items-center justify-center mt-10 mb-20 not-prose'>
-  <div className='flex items-center justify-center h-[400px] w-[800px]'>
-    <CircularGallery
-      images={[
-        '/examples/img-example1.webp',
-        '/examples/img-example2.webp',
-        '/examples/img-example3.webp',
-        '/examples/img-example4.webp',
-        '/examples/img-example5.webp',
-        '/examples/img-example6.webp',
-        '/examples/img-example7.webp',
-        '/examples/img-example8.webp',
-        '/examples/img-example9.webp',
-        '/examples/img-example10.webp'
-      ]}
-      classImage='rounded-lg'
-      autoPlay
-      client:load
-    />
-  </div>
-</div>
+<DemoCircularGallery client:load />
 
 ## Ejemplo de uso
 
