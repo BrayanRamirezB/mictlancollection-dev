@@ -6,6 +6,7 @@ import CodeBlock from '../../components/CodeBlock.jsx'
 import Alert from '../../components/Alert.jsx'
 import CustomTable from '../../components/Table/CustomTable.jsx'
 import MasonryGrid from '../../components/MasonryGrid.jsx'
+import DemoMasonryGrid from '../../components/demos/DemoMasonryGrid.jsx'
 
 <div className='flex items-center justify-center mx-auto not-prose'>
   <Alert
@@ -17,49 +18,7 @@ import MasonryGrid from '../../components/MasonryGrid.jsx'
   />
 </div>
 
-<div className='flex items-center justify-center mt-10 mb-20 not-prose'>
-  <div className='flex items-center justify-center'>
-    <MasonryGrid
-      images={[
-        {
-          src: '/thumbnails/animated-gradient-text.webp',
-          alt: 'Imagen 1'
-        },
-        {
-          src: '/thumbnails/animated-image.webp',
-          alt: 'Imagen 2'
-        },
-        {
-          src: '/thumbnails/animated-text.webp',
-          alt: 'Imagen 3'
-        },
-        {
-          src: '/thumbnails/blurred-background-cards.webp',
-          alt: 'Imagen 4'
-        },
-        {
-          src: '/thumbnails/blurred-text-effect.webp',
-          alt: 'Imagen 5'
-        },
-        {
-          src: '/thumbnails/circular-gallery.webp',
-          alt: 'Imagen 6'
-        },
-        {
-          src: '/thumbnails/diamond-gallery.webp',
-          alt: 'Imagen 7'
-        },
-        {
-          src: '/thumbnails/image-comparator.webp',
-          alt: 'Imagen 8'
-        }
-      ]}
-      columns={4}
-      classImage='rounded-lg shadow-lg border border-neutral-100'
-      client:load
-    />
-  </div>
-</div>
+<DemoMasonryGrid client:load />
 
 ## Ejemplo de uso
 
