@@ -5,7 +5,7 @@ title: Animated gradient text
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Alert from '../../components/Alert.jsx'
 import CustomTable from '../../components/Table/CustomTable.jsx'
-import AnimatedGradientText from '../../components/AnimatedGradientText.jsx'
+import DemoAnimatedGradientText from '../../components/demos/DemoAnimatedGradientText.jsx'
 
 <div className='flex items-center justify-center mx-auto not-prose'>
   <Alert
@@ -17,16 +17,7 @@ import AnimatedGradientText from '../../components/AnimatedGradientText.jsx'
   />
 </div>
 
-<div className='flex flex-col items-center justify-center mt-60 mb-60 not-prose'>
-  <AnimatedGradientText
-    text='Texto animado.'
-    colors={['#ff0000', '#fff', '#00ff00']}
-    className='text-6xl font-extrabold'
-    direction='to left'
-    speed={4}
-    client:load
-  />
-</div>
+<DemoAnimatedGradientText client:load />
 
 ## Ejemplo de uso
 
