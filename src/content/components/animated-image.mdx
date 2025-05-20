@@ -5,7 +5,7 @@ title: Animated image
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Alert from '../../components/Alert.jsx'
 import CustomTable from '../../components/Table/CustomTable.jsx'
-import AnimatedImage from '../../components/AnimatedImage.jsx'
+import DemoAnimatedImage from '../../components/demos/DemoAnimatedImage.jsx'
 
 <div className='flex items-center justify-center mx-auto not-prose'>
   <Alert
@@ -17,13 +17,7 @@ import AnimatedImage from '../../components/AnimatedImage.jsx'
   />
 </div>
 
-<div className='flex items-center justify-center pt-20 pb-20 not-prose'>
-  <AnimatedImage
-    src='/examples/img-example8.webp'
-    alt='Imagen de ejemplo 5'
-    client:load
-  />
-</div>
+<DemoAnimatedImage client:load />
 
 ## Ejemplo de uso
 
